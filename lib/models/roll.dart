@@ -8,7 +8,7 @@ class Roll {
   final String filmStock;
   final int iso;
   final int filmSize;
-  int totalImages;
+  int totalImages = 0;
   List<Image> photos;
 
   Roll({

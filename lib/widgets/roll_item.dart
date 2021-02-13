@@ -7,25 +7,14 @@ class RollItem extends StatelessWidget {
 
   RollItem(this.roll);
 
-  void photoCount() {
-    if (roll.filmSize == 35) {
-      roll.totalImages = 36;
-    } else if (roll.filmSize == 120) {
-      roll.totalImages = 12;
-    } else {
-      roll.totalImages = 8;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    photoCount();
     return Card(
-      shape: RoundedRectangleBorder(
+      shape: BeveledRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
       elevation: 6,
-      margin: EdgeInsets.symmetric(horizontal: 80, vertical: 10),
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: Container(
         height: 150,
         child: Column(
@@ -33,11 +22,11 @@ class RollItem extends StatelessWidget {
           children: <Widget>[
             Text(
               roll.title,
-              style: Theme.of(context).textTheme.title,
+              style: Theme.of(context).textTheme.headline6,
             ),
             Text(
               '${roll.filmStock} ${roll.iso}',
-              style: Theme.of(context).textTheme.body1,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             Text('${roll.filmSize} mm'),
             Text('${roll.totalImages} Photos'),
