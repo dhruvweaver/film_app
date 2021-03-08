@@ -19,10 +19,10 @@ class _TabsScreenState extends State<TabsScreen> {
     return Platform.isIOS
         ? AppBar(
             elevation: 6,
-            shape: BeveledRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10),
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(15),
               ),
             ),
             centerTitle: true,
@@ -31,12 +31,21 @@ class _TabsScreenState extends State<TabsScreen> {
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.w400),
             ),
             actions: <Widget>[
-              IconButton(icon: Icon(Icons.add), onPressed: () {})
+              IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewRollScreen(),
+                      ),
+                    );
+                  })
             ],
             bottom: tabs)
         : AppBar(
             elevation: 6,
-            shape: BeveledRectangleBorder(
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(15),
                 bottomRight: Radius.circular(15),
@@ -91,6 +100,7 @@ class _TabsScreenState extends State<TabsScreen> {
         ),
         // drawer: MainDrawer(),
         body: TabBarView(
+          physics: BouncingScrollPhysics(),
           // controller: _controller,
           children: <Widget>[
             NoteBookOverviewScreen(),
@@ -109,12 +119,9 @@ class _TabsScreenState extends State<TabsScreen> {
                 },
                 backgroundColor: Theme.of(context).accentColor,
                 child: Icon(Icons.add),
-                splashColor: Colors.deepPurple,
-                shape: BeveledRectangleBorder(
-                    borderRadius: BorderRadius.circular(25)),
               )
             : null,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       ),
     );
   }

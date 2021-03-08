@@ -1,6 +1,6 @@
 import 'package:film_app/models/image.dart';
 
-import './models/roll.dart';
+import 'roll.dart';
 
 final dummyRolls = [
   Roll(
@@ -8,7 +8,7 @@ final dummyRolls = [
     title: 'Roll 1',
     filmStock: 'Kodak Portra',
     iso: 400,
-    filmSize: 120,
+    filmSize: '120',
     photos: dummyPhotos1,
   ),
   Roll(
@@ -16,7 +16,15 @@ final dummyRolls = [
     title: 'Roll 2',
     filmStock: 'Ilford HP5',
     iso: 400,
-    filmSize: 35,
+    filmSize: '35mm',
+    photos: dummyPhotos2,
+  ),
+  Roll(
+    id: 'r3',
+    title: 'Roll 3',
+    filmStock: 'Ilford HP5',
+    iso: 400,
+    filmSize: '35mm',
     photos: dummyPhotos2,
   ),
 ];
@@ -55,7 +63,6 @@ final dummyPhotos1 = [
   Image(
     'p11',
   ),
-
 ];
 
 final dummyPhotos2 = [
