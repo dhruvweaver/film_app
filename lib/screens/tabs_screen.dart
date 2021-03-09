@@ -13,6 +13,11 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
+
   bool darkroomToggle = false;
 
   Widget _buildAppBar(TabBar tabs) {
@@ -62,7 +67,6 @@ class _TabsScreenState extends State<TabsScreen> {
   void _isDarkroom(bool dark) {
     darkroomToggle = dark;
     print(darkroomToggle);
-    setState(() {});
   }
 
   @override
@@ -109,13 +113,16 @@ class _TabsScreenState extends State<TabsScreen> {
         ),
         floatingActionButton: Platform.isAndroid
             ? FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
+                onPressed: () async {
+                  await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => NewRollScreen(),
                     ),
                   );
+                  setState(() {
+                    print('set state');
+                  });
                 },
                 backgroundColor: Theme.of(context).accentColor,
                 child: Icon(Icons.add),
