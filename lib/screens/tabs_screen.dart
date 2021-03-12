@@ -13,11 +13,6 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
   bool darkroomToggle = false;
 
   Widget _buildAppBar(TabBar tabs) {
@@ -37,15 +32,17 @@ class _TabsScreenState extends State<TabsScreen> {
             ),
             actions: <Widget>[
               IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewRollScreen(),
-                      ),
-                    );
-                  })
+                icon: Icon(Icons.add),
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NewRollScreen(),
+                    ),
+                  );
+                  setState(() {});
+                },
+              )
             ],
             bottom: tabs)
         : AppBar(
@@ -120,9 +117,7 @@ class _TabsScreenState extends State<TabsScreen> {
                       builder: (context) => NewRollScreen(),
                     ),
                   );
-                  setState(() {
-                    print('set state');
-                  });
+                  setState(() {});
                 },
                 backgroundColor: Theme.of(context).accentColor,
                 child: Icon(Icons.add),
