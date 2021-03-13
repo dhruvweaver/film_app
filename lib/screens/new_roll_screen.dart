@@ -82,6 +82,7 @@ class _NewRollScreenState extends State<NewRollScreen> {
                       child: ElevatedButton(
                         onPressed: () {
                           Roll r = new Roll(
+                              id: titleController.hashCode,
                               title: titleController.text,
                               stock: stockController.text,
                               iso: int.parse(isoController.text),

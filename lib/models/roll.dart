@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import './image.dart';
 
 class Roll {
-  // final String id;
+  final int id;
   final String title;
   final String stock;
   final int iso;
@@ -12,8 +12,7 @@ class Roll {
   List<Image> photos;
 
   Roll(
-      {
-      // {@required this.id,
+      {@required this.id,
       @required this.title,
       @required this.stock,
       @required this.iso,
@@ -23,7 +22,7 @@ class Roll {
 
   Map<String, dynamic> toMap() {
     return {
-      // 'id': id,
+      'id': id,
       'title': title,
       'stock': stock,
       'iso': iso,

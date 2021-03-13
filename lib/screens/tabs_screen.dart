@@ -14,51 +14,86 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   bool darkroomToggle = false;
+  bool deleteMode = false;
+
+  void setDeleteMode(bool mode) {
+    deleteMode = mode;
+    print(deleteMode);
+  }
 
   Widget _buildAppBar(TabBar tabs, context) {
-    return Platform.isIOS
-        ? AppBar(
-            elevation: 6,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(15),
-                bottomRight: Radius.circular(15),
-              ),
-            ),
-            centerTitle: true,
-            title: Text(
-              'Film',
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.w400),
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NewRollScreen(),
-                    ),
-                  );
-                  setState(() {});
-                },
-              )
-            ],
-            bottom: tabs)
-        : AppBar(
-            elevation: 6,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(15),
-                bottomRight: Radius.circular(15),
-              ),
-            ),
-            centerTitle: true,
-            title: Text(
-              'Film',
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.w400),
-            ),
-            bottom: tabs);
+    return AppBar(
+        elevation: 6,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+          ),
+        ),
+        centerTitle: true,
+        title: Text(
+          'Film',
+          style: TextStyle(fontSize: 26, fontWeight: FontWeight.w400),
+        ),
+        actions: Platform.isIOS
+            ? <Widget>[
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewRollScreen(),
+                      ),
+                    );
+                    setState(() {});
+                  },
+                )
+              ]
+            : deleteMode
+                ? Platform.isIOS
+                    ? <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NewRollScreen(),
+                              ),
+                            );
+                            setState(() {});
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete_outline_rounded),
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NewRollScreen(),
+                              ),
+                            );
+                            setState(() {});
+                          },
+                        ),
+                      ]
+                    : <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.delete_outline_rounded),
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NewRollScreen(),
+                              ),
+                            );
+                            setState(() {});
+                          },
+                        )
+                      ]
+                : null,
+        bottom: tabs);
   }
 
   void _isDarkroom(bool dark) {

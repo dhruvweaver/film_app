@@ -25,7 +25,7 @@ class DBHelper {
       // When the database is first created, create a table to store dogs.
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE rolls (title TEXT, stock TEXT, iso INT, filmSize TEXT, totalImages INT)",
+          "CREATE TABLE rolls (id INT, title TEXT, stock TEXT, iso INT, filmSize TEXT, totalImages INT)",
         );
       },
       // Set the version. This executes the onCreate function and provides a
@@ -46,16 +46,16 @@ class DBHelper {
     List<Roll> rolls = [];
     for (int i = 0; i < maps.length; i++) {
       Roll r = Roll(
+        id: maps[i]['id'],
         title: maps[i]['title'],
         stock: maps[i]['stock'],
         iso: maps[i]['iso'],
         filmSize: maps[i]['filmSize'],
         totalImages: maps[i]['totalImages'],
       );
+      // print(r.id);
       rolls.add(r);
     }
-
-    print(rolls);
 
     return rolls;
   }
@@ -67,8 +67,5 @@ class DBHelper {
       'rolls',
       r.toMap(),
     );
-    print(r.toMap());
-    List<Map<String, dynamic>> maps = await dbClient.query('rolls');
-    print(maps[0]['title']);
   }
 }
