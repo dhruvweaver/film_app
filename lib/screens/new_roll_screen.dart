@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 
-import '../models/roll_data.dart';
 import '../models/roll.dart';
 
 class NewRollScreen extends StatefulWidget {
+  final Future<Database> database;
+  NewRollScreen({this.database});
+
   @override
   _NewRollScreenState createState() => _NewRollScreenState();
 }
 
 class _NewRollScreenState extends State<NewRollScreen> {
+  Future<void> insertRoll(Roll r) async {
+    final Database db = await widget.database;
+
+    await db.insert(
+      'rolls',
+      r.toMap(),
+    );
+    print(r.toMap());
+  }
+
   String dropdownValue = '35mm';
 
   final titleController = TextEditingController();
@@ -59,8 +72,12 @@ class _NewRollScreenState extends State<NewRollScreen> {
                           dropdownValue = newValue;
                         });
                       },
-                      items: <String>['35mm', '120', '4x5', '8x10']
-                          .map<DropdownMenuItem<String>>((String value) {
+                      items: <String>[
+                        '35mm',
+                        '120',
+                        '4x5',
+                        '8x10',
+                      ].map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -70,15 +87,14 @@ class _NewRollScreenState extends State<NewRollScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 36),
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           Roll r = new Roll(
-                              id: 'test',
                               title: titleController.text,
-                              filmStock: stockController.text,
+                              stock: stockController.text,
                               iso: int.parse(isoController.text),
                               filmSize: dropdownValue,
-                              photos: null);
-                          dummyRolls.add(r);
+                              totalImages: 0);
+                          await insertRoll(r);
                           Navigator.pop(context);
                         },
                         child: Padding(

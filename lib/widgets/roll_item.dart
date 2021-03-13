@@ -30,7 +30,7 @@ class _RollItemState extends State<RollItem> {
               style: Theme.of(context).textTheme.headline6,
             ),
             Text(
-              '${widget.roll.filmStock} ${widget.roll.iso}',
+              '${widget.roll.stock} ${widget.roll.iso}',
               style: Theme.of(context).textTheme.bodyText2,
             ),
             Text('${widget.roll.filmSize}'),

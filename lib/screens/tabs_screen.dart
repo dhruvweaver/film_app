@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
+import 'package:sqflite/sqflite.dart';
 
 import './notebook_overview_screen.dart';
 import './darkroom_overview_screen.dart';
 import './new_roll_screen.dart';
 
 class TabsScreen extends StatefulWidget {
+  final Future<Database> database;
+
+  TabsScreen(this.database);
+
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
@@ -15,7 +20,7 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   bool darkroomToggle = false;
 
-  Widget _buildAppBar(TabBar tabs) {
+  Widget _buildAppBar(TabBar tabs, context) {
     return Platform.isIOS
         ? AppBar(
             elevation: 6,
@@ -98,13 +103,14 @@ class _TabsScreenState extends State<TabsScreen> {
               ),
             ],
           ),
+          context,
         ),
         // drawer: MainDrawer(),
         body: TabBarView(
           physics: BouncingScrollPhysics(),
           // controller: _controller,
           children: <Widget>[
-            NoteBookOverviewScreen(),
+            NoteBookOverviewScreen(widget.database),
             DarkroomOverviewScreen(_isDarkroom),
           ],
         ),
@@ -114,7 +120,9 @@ class _TabsScreenState extends State<TabsScreen> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NewRollScreen(),
+                      builder: (context) => NewRollScreen(
+                        database: widget.database,
+                      ),
                     ),
                   );
                   setState(() {});
