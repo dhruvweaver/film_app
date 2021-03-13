@@ -7,52 +7,11 @@ import 'package:sqflite/sqflite.dart';
 import './screens/tabs_screen.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // Database database;
-
-  // void openDBFunction() async {
-  //   var databasesPath = await getDatabasesPath();
-  //   String path = join(databasesPath, 'roll_database.db');
-
-  //   // open the database
-  //   database = (await openDatabase(
-  //     path,
-  //     version: 1,
-  //     onCreate: (Database db, int version) async {
-  //       // When creating the db, create the table
-  //       await db.execute(
-  //           'CREATE TABLE rolls (title TEXT, stock TEXT, iso INT, filmSize TEXT, totalImages INT)');
-  //     },
-  //   ));
-  // }
-
-  WidgetsFlutterBinding.ensureInitialized();
-  var databasesPath = await getDatabasesPath();
-  String path = join(databasesPath, 'roll_database.db');
-  // Open the database and store the reference.
-  final Future<Database> database = openDatabase(
-    path,
-    // Set the path to the database. Note: Using the `join` function from the
-    // `path` package is best practice to ensure the path is correctly
-    // constructed for each platform.
-
-    // When the database is first created, create a table to store dogs.
-    onCreate: (db, version) {
-      return db.execute(
-        "CREATE TABLE rolls (title TEXT, stock TEXT, iso INT, filmSize TEXT, totalImages INT)",
-      );
-    },
-    // Set the version. This executes the onCreate function and provides a
-    // path to perform database upgrades and downgrades.
-    version: 1,
-  );
-
-  runApp(MyApp(database));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  Future<Database> db;
-  MyApp(this.db);
+  MyApp();
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -99,7 +58,7 @@ class _MyAppState extends State<MyApp> {
       //     ),
       //   ),
       // ),
-      home: TabsScreen(widget.db),
+      home: TabsScreen(),
     );
   }
 }

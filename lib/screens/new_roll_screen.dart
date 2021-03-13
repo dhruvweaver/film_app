@@ -1,27 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../models/roll.dart';
+import '../models/db_helper.dart';
 
 class NewRollScreen extends StatefulWidget {
-  final Future<Database> database;
-  NewRollScreen({this.database});
-
   @override
   _NewRollScreenState createState() => _NewRollScreenState();
 }
 
 class _NewRollScreenState extends State<NewRollScreen> {
-  Future<void> insertRoll(Roll r) async {
-    final Database db = await widget.database;
-
-    await db.insert(
-      'rolls',
-      r.toMap(),
-    );
-    print(r.toMap());
-  }
-
   String dropdownValue = '35mm';
 
   final titleController = TextEditingController();
@@ -30,6 +17,12 @@ class _NewRollScreenState extends State<NewRollScreen> {
   String title;
   String stock;
   int iso;
+
+  void _submit(Roll r) {
+    var dbHelper = DBHelper();
+
+    dbHelper.insertRoll(r);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,14 +80,14 @@ class _NewRollScreenState extends State<NewRollScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 36),
                       child: ElevatedButton(
-                        onPressed: () async {
+                        onPressed: () {
                           Roll r = new Roll(
                               title: titleController.text,
                               stock: stockController.text,
                               iso: int.parse(isoController.text),
                               filmSize: dropdownValue,
                               totalImages: 0);
-                          await insertRoll(r);
+                          _submit(r);
                           Navigator.pop(context);
                         },
                         child: Padding(

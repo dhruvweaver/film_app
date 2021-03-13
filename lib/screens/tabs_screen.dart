@@ -2,17 +2,12 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:md2_tab_indicator/md2_tab_indicator.dart';
-import 'package:sqflite/sqflite.dart';
 
 import './notebook_overview_screen.dart';
 import './darkroom_overview_screen.dart';
 import './new_roll_screen.dart';
 
 class TabsScreen extends StatefulWidget {
-  final Future<Database> database;
-
-  TabsScreen(this.database);
-
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
@@ -110,7 +105,7 @@ class _TabsScreenState extends State<TabsScreen> {
           physics: BouncingScrollPhysics(),
           // controller: _controller,
           children: <Widget>[
-            NoteBookOverviewScreen(widget.database),
+            NoteBookOverviewScreen(),
             DarkroomOverviewScreen(_isDarkroom),
           ],
         ),
@@ -120,9 +115,7 @@ class _TabsScreenState extends State<TabsScreen> {
                   await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NewRollScreen(
-                        database: widget.database,
-                      ),
+                      builder: (context) => NewRollScreen(),
                     ),
                   );
                   setState(() {});

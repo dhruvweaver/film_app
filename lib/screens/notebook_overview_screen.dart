@@ -6,55 +6,37 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/roll.dart';
+import '../models/db_helper.dart';
 
 class NoteBookOverviewScreen extends StatefulWidget {
-  final Future<Database> database;
-  NoteBookOverviewScreen(this.database);
-
   @override
   _NoteBookOverviewScreenState createState() => _NoteBookOverviewScreenState();
 }
 
 class _NoteBookOverviewScreenState extends State<NoteBookOverviewScreen> {
-  // A method that retrieves all the dogs from the dogs table.
-  Future<List<Roll>> getRolls() async {
-    // Get a reference to the database.
-    final Database db = await widget.database;
-
-    // Query the table for all The Dogs.
-    List<Map<String, dynamic>> maps = await db.query('rolls');
-
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
-    return List.generate(maps.length, (i) {
-      return Roll(
-        title: maps[i]['title'],
-        stock: maps[i]['stock'],
-        iso: maps[i]['iso'],
-        filmSize: maps[i]['filmSize'],
-        totalImages: maps[i]['totalImages'],
-      );
-    }) as Future<List<Roll>>;
-
-    // await setRolls();
+  @override
+  void initState() {
+    super.initState();
   }
 
-  // setRolls() async {
-  //   getRolls();
-  //   print('Map: ');
-  //   print(maps);
-  //   rolls = await rollsF;
-  // }
+  Future<List<Roll>> fetchRollsFromDatabase() async {
+    var dbHelper = DBHelper();
+
+    Future<List<Roll>> rolls = dbHelper.getRolls();
+    return rolls;
+  }
 
   @override
   Widget build(BuildContext context) {
-    Future<List<Roll>> rollsF;
-    List<Roll> rolls = [];
+    // Future<List<Roll>> rollsF = _appData.then((value) => value.rolls);
+    List<Roll> rolls;
     return FutureBuilder(
-        future: getRolls(),
-        builder: (context, AsyncSnapshot<dynamic> snapshot) {
-          print(snapshot.data);
+        // future: Future.wait([rollsF]),
+        future: fetchRollsFromDatabase(),
+        builder: (context, snapshot) {
+          print(snapshot);
           rolls = snapshot.data;
-          if (rolls.isNotEmpty) {
+          if (snapshot.hasData) {
             return ListView.builder(
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.only(top: 30, bottom: 80),
@@ -75,6 +57,7 @@ class _NoteBookOverviewScreenState extends State<NoteBookOverviewScreen> {
             );
           }
         });
+    //
     // : Column(
     //     mainAxisAlignment: MainAxisAlignment.center,
     //     children: [
